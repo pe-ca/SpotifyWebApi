@@ -1,4 +1,5 @@
 ﻿using ConsumeSpotifyWebApi.Models;
+using ConsumeSpotifyWebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,15 +7,25 @@ namespace ConsumeSpotifyWebApi.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ISpotifyAccountService _spotifyAccountService;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ISpotifyAccountService spotifyAccountService, IConfiguration configuration)
         {
-            _logger = logger;
+            _spotifyAccountService = spotifyAccountService;
+            _configuration = configuration;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            try
+            {
+                var token = await _spotifyAccountService.GetToken(_configuration["Spotify:ClientId"], _configuration["Spotify:ClientSecret"]);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
             return View();
         }
 
