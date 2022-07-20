@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c => c.BaseAddress = new Uri("https://accounts.spotify.com/"));
+builder.Services.AddHttpClient<ISpotifyAccountService, SpotifyAccountService>(c => c.BaseAddress = new Uri("https://accounts.spotify.com/api/"));
 
 var app = builder.Build();
 
