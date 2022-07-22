@@ -21,7 +21,7 @@ namespace ConsumeSpotifyWebApi.Controllers
         public async Task<IActionResult> Index()
         {
             var releases = await GetReleases();
-            return View();
+            return View(releases);
         }
 
         private async Task<IEnumerable<Releases>> GetReleases()
@@ -30,7 +30,7 @@ namespace ConsumeSpotifyWebApi.Controllers
             {
                 var token = await _spotifyAccountService.GetToken(_configuration["Spotify:ClientId"], _configuration["Spotify:ClientSecret"]);
 
-                var newReleases = await _spotifyService.GetNewReleases("MX", 20, token);
+                var newReleases = await _spotifyService.GetNewReleases("MX", 50, token);
 
                 return newReleases;
             }
